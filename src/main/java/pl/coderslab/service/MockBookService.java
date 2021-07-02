@@ -1,19 +1,19 @@
 package pl.coderslab.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 import pl.coderslab.model.Book;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Getter
 @Setter
+@ToString
 @Component
 public class MockBookService {
 
-    private List<Book> list;
+    private final List<Book> list;
     private static Long nextId = 4L;
 
     public MockBookService() {
@@ -24,14 +24,33 @@ public class MockBookService {
         list.add(new Book(3L, "9780130819338", "Java	2.	Podstawy", "Cay	Horstmann,	Gary	Cornell", "Helion",
                 "programming"));
     }
-    public void add(Book book){
-        book.setId(nextId);
-        list.add(book);
-        nextId++;
+    public List<Book> showBooks(){
+        return list;
     }
+
+    public void addBook(Book book){
+        book.setId(nextId++);
+        list.add(book);
+    }
+    public void updateBook(Book newBook){
+        for(Book book: getList()){
+            if(book.getId().equals(newBook.getId())){
+
+                book.setIsbn(newBook.getIsbn());
+                book.setTitle(newBook.getTitle());
+                book.setAuthor(newBook.getAuthor());
+                book.setPublisher(newBook.getPublisher());
+                book.setType(newBook.getType());
+            }
+        }
+    }
+    
 
     public void removeBook(Long id){
-        list.removeIf((el)->el.getId() == id);
+        list.removeIf((el)->el.getId()==id);
     }
 
+    public Optional<Book> getBookById(Long id) {
+        return getList().stream().filter(i->i.getId()==id).findFirst();
+    }
 }

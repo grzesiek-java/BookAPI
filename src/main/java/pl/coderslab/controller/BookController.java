@@ -25,13 +25,22 @@ public class BookController {
                 "Bruce Eckel", "Helion", "programming");
     }
     @RequestMapping("")
-    public List<Book> showBooks(MockBookService service){
-        return service.getList();
+    public List<Book> showBooks(){
+        return service.showBooks();
     }
 
     @PostMapping
     public void addBook(@RequestBody Book book){
-        service.add(book);
+        service.addBook(book);
+    }
+    @GetMapping("/{id}")
+    public Book getBook(@PathVariable Long id){
+        return service.getBookById(id).orElseThrow(()->new RuntimeException("book not found"));
+    }
+    @PutMapping("")
+    @ResponseBody
+    public void update(@RequestBody Book book){
+        service.updateBook(book);
     }
 
     @DeleteMapping ("/{id}")
