@@ -28,20 +28,20 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
     }
 
 
-    public void onStartup(ServletContext servletContext) throws ServletException {
-        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(AppConfig.class);
-        context.setServletContext(servletContext);
-
-        ServletRegistration.Dynamic servletRegistration = servletContext
-                .addServlet("dispatcher", new DispatcherServlet(context));
-        servletRegistration.setLoadOnStartup(1);
-        servletRegistration.addMapping("/");
-
-        FilterRegistration.Dynamic fr = servletContext.addFilter("encodingFilter",
-                new CharacterEncodingFilter());
-        fr.setInitParameter("encoding", "UTF-8");
-        fr.setInitParameter("forceEncoding", "true");
-        fr.addMappingForUrlPatterns(null, true, "/*");
-    }
+//    public void onStartup(ServletContext servletContext) throws ServletException {
+//        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+//        context.register(AppConfig.class);
+//        context.setServletContext(servletContext);
+//
+//        ServletRegistration.Dynamic servletRegistration = servletContext
+//                .addServlet("dispatcher", new DispatcherServlet(context));
+//        servletRegistration.setLoadOnStartup(1);
+//        servletRegistration.addMapping("/");
+//
+//        FilterRegistration.Dynamic fr = servletContext.addFilter("encodingFilter",
+//                new CharacterEncodingFilter());
+//        fr.setInitParameter("encoding", "UTF-8");
+//        fr.setInitParameter("forceEncoding", "true");
+//        fr.addMappingForUrlPatterns(null, true, "/*");
+//    }
 }
